@@ -17,11 +17,21 @@ async function createVideo(title, description, url, image) {
             imagem: image
         })
     });
+    if (!request.ok) {
+        throw new Error('Não foi possível enviar o vídeo')
+    }
     const response = await request.json();
+    return response;
+}
+
+async function searchVideo(term) {
+    const request  = await fetch(`http://localhost:3000/videos?q=${term}`);
+    const response = request.json();
     return response;
 }
 
 export const connectAPI = {
     listVideos,
-    createVideo
+    createVideo,
+    searchVideo
 }
